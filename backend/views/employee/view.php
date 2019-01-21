@@ -20,16 +20,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="employee-view">
 
-    <h1><?= Html::encode($this->title) ?> | <?= date('Y M', strtotime($myDate)) ?></h1>
-
-    <p></p>
-
-
-    <?= Html::beginForm(['/employee/view', 'id' => $model->id], 'POST'); ?>
-    <?= Html::dropDownList('Year', $year, Overtime::getYearList(), ['options'=>['class' => 'form-control']]) ?>
-    <?= Html::dropDownList('Month', $month, Overtime::getMonthList()) ?>
-    <?= Html::submitButton('Sumit', ['class' => 'btn btn-primary']); ?>
-    <?= Html::endForm(); ?>
+    <h1><?= Html::encode($this->title) ?> | <?= date('M Y', strtotime($myDate)) ?></h1>
+    <div class="panel" style="float: right;">
+        <?= Html::beginForm(['/employee/view', 'id' => $model->id], 'POST'); ?>
+        <?= Html::submitButton('Sumit', ['class' => 'btn btn-primary', 'style' => 'float: right; margin: 0 10px;']); ?>
+        <?= Html::dropDownList('Month', $month, Overtime::getMonthList(), ['class' => 'form-control', 'style' => 'float: right;width: 120px; margin: 0 10px;']) ?>
+        <?= Html::dropDownList('Year', $year, Overtime::getYearList(), ['class' => 'form-control', 'style' => 'float: right;width: 120px; margin: 0 10px;']) ?>
+        <?= Html::endForm(); ?>
+    </div>
     <p></p>
     <p></p>
     <hr>
@@ -64,11 +62,10 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 
 
-    <h1>Overtime | Total: <?= $overtimeAmount . ' LBP' ?></h1>
+    <h1>Overtime | Total: <?= $overtimeAmount ? $overtimeAmount . ' LBP' : '0 LBP' ?></h1>
     <?= Html::a('Add Overtime', ['overtime/create', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-    <p></p>
 
-    <div class="panel">
+    <div class="panel" style="float: right;">
         <?=
         ExportMenu::widget([
             'target' => ExportMenu::TARGET_BLANK,
@@ -101,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]);
         ?>
     </div>
-
+    <p></p>
     <?=
     GridView::widget([
         'dataProvider' => $overDataProvider,
@@ -135,11 +132,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p></p>
     <hr>
-    <h1>PrePaid | Total: <?= $prepaidAmount . ' LBP' ?></h1>
+    <h1>PrePaid | Total: <?= $prepaidAmount? $prepaidAmount . ' LBP' : '0 LBP' ?></h1>
     <?= Html::a('Add Prepaid', ['pre-paid/create', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-    <p></p>
-
-    <div class="panel">
+    <div class="panel" style="float: right;">
         <?=
         ExportMenu::widget([
             'target' => ExportMenu::TARGET_BLANK,
@@ -171,6 +166,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]);
         ?>
     </div>
+    <p></p>
     <?=
     GridView::widget([
         'dataProvider' => $preDataProvider,
